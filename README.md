@@ -20,3 +20,13 @@ Travelling through flights has become an integral part of today’s lifestyle as
 destination, and duration of flights various occasions such as vacations or festive
 season. Therefore, having some basic idea of the flight fares before planning the trip will surely help many people save money and time.
 The main goal is to predict the fares of the flights based on different factors available in the provided dataset.
+
+## Goal:
+'''
+The goal is to predict the fares of the flights based on different factors available in the provided dataset.
+'''
+## Approach:
+The classical machine learning tasks like Data Exploration, Data Cleaning, Feature Engineering, Model Building and Model Testing. Try out different machine learning algorithms that best fits for the above case.
+
+## Deployment Link: 
+Azure

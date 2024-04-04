@@ -8,3 +8,4 @@ lightgbm
 tqdm
 optuna
 xgboost
+-e .
