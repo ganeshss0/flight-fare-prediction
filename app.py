@@ -158,4 +158,4 @@ if __name__ == '__main__':
             status.text('Complete')
             del(progressbar)
 
-            st.success(f"Predicted Price: $ {pred[0]:.2f}")
+            st.success(f"Predicted Price: ₹ {pred[0]:.2f}")
