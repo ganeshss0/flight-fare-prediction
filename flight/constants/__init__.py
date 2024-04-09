@@ -11,9 +11,11 @@ os.chdir(ROOT_DIR)
 CONFIG_DIR = 'config'
 CONFIG_FILE = 'config.yaml'
 SCHEMA_FILE = 'schema.yaml'
+MODEL_PARAMETER_FILE = 'model.yaml'
 
 CONFIG_FILE_PATH = os.path.join(CONFIG_DIR, CONFIG_FILE)
 SCHEMA_FILE_PATH = os.path.join(CONFIG_DIR, SCHEMA_FILE)
+MODEL_PARAMETER_PATH = os.path.join(CONFIG_DIR, MODEL_PARAMETER_FILE)
 
 # current_dir = os.path.dirname(inspect.getfile(inspect.currentframe())) 
 

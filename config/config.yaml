@@ -7,3 +7,6 @@ TEST_DATASET_FILE: "Data_Test.xlsx"
 
 ARTIFACT_DIRECTORY: "artifacts"
 PREPROCESSOR_FILE: 'preprocessor.joblib'
+
+MODEL_DIRECTORY: "models"
+MODEL_FILE: "model.joblib"

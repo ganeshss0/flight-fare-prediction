@@ -1,5 +1,6 @@
 from flight.utility import load_object, read_yaml
 from flight.components.data_transformation import DataTransformation
+from flight.components.model_trainer import ModelTrainer
 from flight.logger import logging
 import streamlit as st
 from flight.constants import (
@@ -93,8 +94,23 @@ if __name__ == '__main__':
     )
 
     
+    if st.sidebar.button('Rebuild Model'):
+        progressbar = st.sidebar.progress(0)
+        status = st.sidebar.empty(0)
 
+        trainer = ModelTrainer()
+        progressbar.progress(10)
+        status.text(f'Progress: {10}')
 
+        trainer.build_model()
+        progressbar.progress(45)
+        status.text(f'Progress: {45}')
+
+        trainer.train_model()
+        progressbar.progress(100)
+        status.text(f'Progress: {100}')
+
+        st.info('Model Trained Successfully')
 
     # button to trigger predictions
     if st.button("Predict Price"):
@@ -132,7 +148,7 @@ if __name__ == '__main__':
             model = load_object(model_path)
             logging.info('Model Predicting...')
             pred = model.predict(transformed_data)
-            import time
+
             logging.info(f'Prediction Result: {pred}')
 
             for i in range(100):
@@ -140,5 +156,6 @@ if __name__ == '__main__':
                 progressbar.progress(i+1)
                 status.text(f'Progress: {i+1}%')
             status.text('Complete')
+            del(progressbar)
 
             st.success(f"Predicted Price: $ {pred[0]:.2f}")

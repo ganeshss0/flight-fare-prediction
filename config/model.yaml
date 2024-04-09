@@ -1,0 +1,7 @@
+HyperParameter:
+  "criterion" : "squared_error"
+  "max_depth" : 10
+  "min_samples_split" : 12
+  "n_estimators" : 486
+  "max_features" : "sqrt"
+  "ccp_alpha" : 3

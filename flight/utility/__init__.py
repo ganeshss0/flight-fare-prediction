@@ -39,62 +39,6 @@ def write_yaml(file_path: str, data: dict, encoding: str='utf-8', **kwargs) -> s
 
 
 
-def get_datasets(artifact_path: str, schema_file_path: str, date_string: str = None) -> list[tuple]:
-    '''
-    A function that can give a list of tuples of datasets after matching the given date_string to each data ingestion folder.
-    * `artifact_path` : Data Ingestion Artifact Path
-    * `schema_file_path` : Schema Configuration file path(schema.yml)
-    * `date_string` : Matches the date string with available datasets, Default=None.
-
-    If `date_string` gives the latest datasets available by Default(None), if string does not match it return empty list.
-    '''
-    try:
-        schema = read_yaml(schema_file_path)
-    
-
-        folders = sorted(available_datasets(artifact_path), reverse=True)
-
-        if date_string:
-            matching_folder = [folder for folder in folders if date_string in folder]
-        else:
-            matching_folder = [folders[0]]
-
-        def get_data_ingestion_folder() -> tuple[str]:
-            config = read_yaml(CONFIG_FILE_PATH)
-            ingestion_config = config[DATA_INGESTION_CONFIG_KEY]
-            train_path = os.path.join(
-                ingestion_config[INGESTION_DATA_DIR_KEY], 
-                ingestion_config[DATA_INGESTION_TRAIN_DIR_KEY]
-            )
-            test_path = os.path.join(
-                ingestion_config[INGESTION_DATA_DIR_KEY], 
-                ingestion_config[DATA_INGESTION_TEST_DIR_KEY]
-            )
-            return train_path, test_path
-
-        
-        datasets = []
-        ingested_train_path, ingested_test_path = get_data_ingestion_folder()
-
-        for folder in matching_folder:
-            path = os.path.join(artifact_path, folder)
-            if os.path.exists(path):
-                train_path = os.path.join(path, ingested_train_path)
-                file_name = os.listdir(train_path)[0]
-                train_path = os.path.join(train_path, file_name)
-                test_path = os.path.join(path, ingested_test_path, file_name)
-                datasets.append(
-                    (
-                        pd.read_csv(train_path, dtype=schema[SCHEMA_COLUMNS_KEY]), 
-                        pd.read_csv(test_path, dtype=schema[SCHEMA_COLUMNS_KEY])
-                    )
-                )
-                
-        
-        return datasets
-    except Exception as e:
-        raise FlightException(e, sys)
-
 def get_dataset(file_path: str, *args, **kwargs) -> pd.DataFrame:
 
     try:
@@ -105,16 +49,6 @@ def get_dataset(file_path: str, *args, **kwargs) -> pd.DataFrame:
     except Exception as e:
         raise FlightException(e, sys)
 
-
-def available_datasets(artifact_path: str):
-    
-    try:
-        datasets = os.listdir(artifact_path)
-    except Exception as e:
-        raise FlightException(e, sys)
-
-    print(f'Available Datasets Count: {len(datasets)}')
-    return datasets
 
 
 
