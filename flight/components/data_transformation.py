@@ -72,7 +72,8 @@ class DataTransformation:
         self.create_dataframe()
         logging.info('Transforming Data')
         transformed = preprocessor.transform(self.DataFrame)
-        return pd.DataFrame(transformed)
+
+        return pd.DataFrame(transformed, columns=self.schema['Processed_Column_Names'])
 
     def get_preprocessor(self) -> ColumnTransformer:
         logging.info('Reading Config file')
