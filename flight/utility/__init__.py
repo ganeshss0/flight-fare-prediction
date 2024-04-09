@@ -1,13 +1,12 @@
 import sys, os
-from yaml import safe_load, dump
-from flight.exception import SampleMLException
-from flight.logger import logging
-import pandas as pd
-from flight.constants import *
 import joblib
 import numpy as np
-
-
+import pandas as pd
+from yaml import safe_load, dump
+from flight.logger import logging
+from flight.exception import FlightException
+from flight.constants import *
+from datetime import datetime
 
 def read_yaml(file_path: str, encoding:str='utf-8') -> dict:
     '''Reads a YAML file and returns the contents as dictonary object.'''
@@ -20,7 +19,7 @@ def read_yaml(file_path: str, encoding:str='utf-8') -> dict:
         return config
         
     except Exception as e:
-        raise SampleMLException(e, sys) from e
+        raise FlightException(e, sys) from e
 
 
 def write_yaml(file_path: str, data: dict, encoding: str='utf-8', **kwargs) -> str:
@@ -36,7 +35,7 @@ def write_yaml(file_path: str, data: dict, encoding: str='utf-8', **kwargs) -> s
         return file_path
     
     except Exception as e:
-        raise SampleMLException(e, sys) from e
+        raise FlightException(e, sys) from e
 
 
 
@@ -94,20 +93,17 @@ def get_datasets(artifact_path: str, schema_file_path: str, date_string: str = N
         
         return datasets
     except Exception as e:
-        raise SampleMLException(e, sys)
+        raise FlightException(e, sys)
 
-def get_dataset(file_path: str, schema: str|dict, *args, **kwargs) -> pd.DataFrame:
+def get_dataset(file_path: str, *args, **kwargs) -> pd.DataFrame:
 
     try:
-        if isinstance(schema, str):
-            schema = read_yaml(schema)
+        data = pd.read_excel(file_path, *args, **kwargs)
 
-        data = pd.read_csv(file_path, *args, **kwargs)
-        validate_dataset_schema(data, schema)
-        return data.astype(schema[SCHEMA_COLUMNS_KEY])
+        return data
         
     except Exception as e:
-        raise SampleMLException(e, sys)
+        raise FlightException(e, sys)
 
 
 def available_datasets(artifact_path: str):
@@ -115,7 +111,7 @@ def available_datasets(artifact_path: str):
     try:
         datasets = os.listdir(artifact_path)
     except Exception as e:
-        raise SampleMLException(e, sys)
+        raise FlightException(e, sys)
 
     print(f'Available Datasets Count: {len(datasets)}')
     return datasets
@@ -138,7 +134,7 @@ def save_object(filepath: str, object, *args, **kwargs):
         return filepath
 
     except Exception as e:
-        raise SampleMLException(e, sys)
+        raise FlightException(e, sys)
     
 def load_object(filepath: str, *args, **kwargs):
     try:
@@ -152,56 +148,14 @@ def load_object(filepath: str, *args, **kwargs):
         return object
 
     except Exception as e:
-        raise SampleMLException(e, sys)
+        raise FlightException(e, sys)
     
 
-
-
-
-
-
-
-
-def validate_dataset_schema(dataset: pd.DataFrame, schema: dict) -> bool:
+def str_to_datetime(string, format):
     try:
-        
-        # assignment validate training and testing dataset using schema file
-        # num of columns
-        # names of columns
-        # check the value of ocean proximity
-
-
-
-        logging.info('Checking Columns in dataframe...')
-        schema_columns_dtype = schema[SCHEMA_COLUMNS_KEY]
-        dataframe_columns = set(dataset.columns.str.lower())
-        schema_cols = set(map(str.lower, schema_columns_dtype))
-
-        # checking columns
-        
-        if dataframe_columns == schema_cols:
-            logging.info('All columns matched')
-            logging.info('Checking values in ocean proximity...')
-
-            schema_ocean_proximity_value = set(schema[SCHEMA_DOMAIN_VALUE_KEY][SCHEMA_OCEAN_PROXIMITY_COLUMN_KEY])
-
-            data_ocean_proximity_value = set(dataset[COLUMN_OCEAN_PROXIMITY].unique())
-
-            if schema_ocean_proximity_value == data_ocean_proximity_value:
-                logging.info('ocean_proximity values matched')   
-            else:
-                missing_value = schema_ocean_proximity_value - data_ocean_proximity_value
-                extra_value = data_ocean_proximity_value - schema_ocean_proximity_value
-                message = f'Missing ocean_proximity values: {missing_value} | Extra ocean_proximity values: {extra_value}'
-                logging.warning(message)
-                raise ValueError(message)
-        else:
-            missing_cols = schema_cols - dataframe_columns
-            extra_cols = dataframe_columns - schema_cols
-            message = f'Missing Columns: {missing_cols} | Extra Columns: {extra_cols}'
-            logging.warning(message)
-            raise ValueError(message)
-    
-
+        dt = datetime.strptime(string, format)
+        return dt
     except Exception as e:
-        raise SampleMLException(e, sys) from e
+        logging.error(e)
+        raise FlightException(e, sys)
+

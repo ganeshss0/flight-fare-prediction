@@ -1,0 +1,75 @@
+Numerical_Columns:
+  - Total_Stops
+  - Duration_Hours
+  - Duration_Mins
+  - Journey_Day
+  - Journey_Month
+  - Dep_Hour
+  - Dep_Min
+  - Arrival_Hour
+  - Arrival_Minute
+
+Categorical_Columns:
+  - Airline
+  - Source
+  - Destination
+
+
+Interim_Column_Names:
+  - Airline
+  - Source
+  - Destination
+  - Total_Stops
+  - Duration_Hours
+  - Duration_Mins
+  - Journey_Day
+  - Journey_Month
+  - Dep_Hour
+  - Dep_Min
+  - Arrival_Hour
+  - Arrival_Minute
+
+
+Total_Stops:
+  "non-stop": 0
+  "1 stop": 1
+  "2 stops": 2
+  "3 stops": 3
+  "4 stops": 4
+
+
+Other_Airlines:
+  - "Multiple carriers Premium economy"
+  - "Jet Airways Business"
+  - "Trujet"
+  - "Vistara Premium economy"
+
+Airlines:
+  - "Air Asia"
+  - "Air India"
+  - "GoAir"
+  - "Indigo"
+  - "Jet Airways"
+  - "Jet Airways Business"
+  - "Multiple carriers"
+  - "Multiple carriers Premium economy"
+  - "SpiceJet"
+  - "Trujet"
+  - "Vistara"
+  - "Vistara Premium economy"
+
+Source:
+  - "Banglore"
+  - "Chennai"
+  - "Delhi"
+  - "Kolkata"
+  - "Mumbai"
+
+Destination:
+  - "Banglore"
+  - "Cochin"
+  - "Delhi"
+  - "Hyderabad"
+  - "Kolkata"
+  - "New Delhi"
+

@@ -8,6 +8,6 @@ lightgbm
 tqdm
 optuna
 xgboost
-flask
-flask-cors
+joblib
+streamlit
 -e .

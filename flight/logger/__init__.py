@@ -7,7 +7,7 @@ from datetime import datetime
 from typing import Any
 
 
-LOG_FILE = f"{datetime.now().strftime('%Y-%m-%d_%H:%M:%S')}.log"
+LOG_FILE = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
 LOGS_DIR = 'logs'
 LOG_FILE_PATH = join(LOGS_DIR, LOG_FILE)
 
