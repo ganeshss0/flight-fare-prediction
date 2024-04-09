@@ -96,7 +96,7 @@ if __name__ == '__main__':
     
     if st.sidebar.button('Rebuild Model'):
         progressbar = st.sidebar.progress(0)
-        status = st.sidebar.empty(0)
+        status = st.sidebar.empty()
 
         trainer = ModelTrainer()
         progressbar.progress(10)
