@@ -29,4 +29,4 @@ The goal is to predict the fares of the flights based on different factors avail
 The classical machine learning tasks like Data Exploration, Data Cleaning, Feature Engineering, Model Building and Model Testing. Try out different machine learning algorithms that best fits for the above case.
 
 ## Deployment Link: 
-Azure
+https://flight-fare.streamlit.app
