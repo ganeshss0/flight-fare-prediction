@@ -1,27 +1,27 @@
 '''Importing Libraries'''
 
 import logging
-import os
-from os.path import join
-from datetime import datetime
+# import os
+# from os.path import join
+# from datetime import datetime
 from typing import Any
 
 
-LOG_FILE = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-LOGS_DIR = 'logs'
-LOG_FILE_PATH = join(LOGS_DIR, LOG_FILE)
+# LOG_FILE = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+# LOGS_DIR = 'logs'
+# LOG_FILE_PATH = join(LOGS_DIR, LOG_FILE)
 
-os.makedirs(
-    name=LOGS_DIR,
-    exist_ok=True
-)
+# os.makedirs(
+#     name=LOGS_DIR,
+#     exist_ok=True
+# )
 
 
 
 
 logging.basicConfig(
-    filename=LOG_FILE_PATH,
-    filemode="w",
+    # filename=LOG_FILE_PATH,
+    # filemode="w",
     format='[%(asctime)s] | %(levelname)s | %(filename)s | %(funcName)s() | %(lineno)d | %(message)s',
     level=logging.INFO
 )
